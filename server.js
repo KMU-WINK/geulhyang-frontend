@@ -1,3 +1,5 @@
+require("dotenv").config(); // .env 파일의 환경 변수를 로드
+
 const express = require("express");
 const axios = require("axios");
 const bodyParser = require("body-parser");
@@ -31,8 +33,17 @@ app.post("/auth/kakao", async (req, res) => {
     );
 
     const { access_token } = tokenResponse.data;
+    console.log(tokenResponse.data);
     res.json({ access_token });
   } catch (error) {
+    console.error(
+      "Error fetching access token:",
+      error.response ? error.response.data : error.message,
+    );
     res.status(500).send("Internal Server Error");
   }
+});
+
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT || 4000}`);
 });
