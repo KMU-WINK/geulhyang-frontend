@@ -36,3 +36,7 @@ app.post("/auth/kakao", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+app.listen(4000, () => {
+  console.log("Server running on http://localhost:4000");
+});
