@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import { authState } from "../state/authState";
 
 function KakaoCallback() {
   const navigate = useNavigate();
+  const setAuthState = useSetRecoilState(authState);
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -18,10 +21,14 @@ function KakaoCallback() {
           );
 
           const { token } = response.data;
-          const { firstLogin } = response.data.message;
-          console.log("콜백 페이지, 토큰:", token);
-          console.log("콜백 페이지, 유저 정보 :", firstLogin);
+          const { message } = response.data;
 
+          console.log("콜백 페이지, 토큰:", token);
+          console.log("콜백 페이지, 유저 정보 :", message);
+
+          const firstLogin = message === "none";
+
+          setAuthState({ token, firstLogin });
           localStorage.setItem("kakaoToken", token);
 
           if (firstLogin) {
@@ -42,7 +49,7 @@ function KakaoCallback() {
     };
 
     handleAuth();
-  }, [navigate]);
+  }, [navigate, setAuthState]);
 
   return <div />;
 }

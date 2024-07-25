@@ -10,18 +10,24 @@ function FirstLoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const token = localStorage.getItem("kakaoToken");
+    const code = new URLSearchParams(window.location.search).get("code");
+
+    if (!code) {
+      console.error("첫 로그인 페이지, 에러: 인가 코드 없음");
+      return;
+    }
 
     try {
-      await axios.post(
-        "http://localhost:4000/profile-setup",
-        { nickname, gender, age },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const response = await axios.post("http://localhost:4000/register", {
+        nickname,
+        gender,
+        age,
+        code,
+      });
+
+      const { token } = response.data;
+      localStorage.setItem("kakaoToken", token);
+
       navigate("/success");
     } catch (error) {
       console.error("첫 로그인 페이지, 에러 :", error);

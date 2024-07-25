@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { authState } from "../state/authState";
 
 function SuccessPage() {
   const navigate = useNavigate();
+  const auth = useRecoilValue(authState);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("kakaoToken");
+    const storedToken = localStorage.getItem("kakaoToken") || auth.token;
 
-    console.log("토큰 :", storedToken);
-
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
-      console.error("성공 페이지, 에러 : 토큰 없음.");
+    if (!storedToken) {
+      console.error("성공 페이지, 에러 : 토큰 없음");
       navigate("/login");
+    } else {
+      setToken(storedToken);
+      console.log("성공 페이지, 저장된 토큰 :", storedToken);
     }
-  }, [navigate]);
+  }, [auth.token, navigate]);
 
   const handleKakaoLogout = () => {
     localStorage.removeItem("kakaoToken");
