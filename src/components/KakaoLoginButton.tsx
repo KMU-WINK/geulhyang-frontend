@@ -11,19 +11,23 @@ function KakaoLoginButton() {
       if (!window.Kakao.isInitialized()) {
         window.Kakao.init(KAKAO_JS_KEY);
         setIsKakaoInitialized(true);
-        console.log("Kakao SDK 초기화 완료");
+        console.log("카카오 로그인 버튼 : Kakao SDK 초기화 완료");
       } else {
         setIsKakaoInitialized(true);
-        console.log("Kakao SDK 이미 초기화됨");
+        console.log("카카오 로그인 버튼 : Kakao SDK 이미 초기화됨");
       }
     } else {
-      console.error("Kakao 객체를 찾을 수 없습니다.");
+      console.error(
+        "카카오 로그인 버튼, 에러 : Kakao 객체를 찾을 수 없습니다.",
+      );
     }
   }, []);
 
   const handleKakaoLogin = () => {
     if (!isKakaoInitialized) {
-      console.error("Kakao SDK가 초기화되지 않았습니다.");
+      console.error(
+        "카카오 로그인 버튼, 에러 : Kakao SDK가 초기화되지 않았습니다.",
+      );
       return;
     }
     if (window.Kakao && window.Kakao.Auth) {
@@ -31,7 +35,9 @@ function KakaoLoginButton() {
         redirectUri: REDIRECT_URI,
       });
     } else {
-      console.error("Kakao.Auth 객체를 찾을 수 없습니다.");
+      console.error(
+        "카카오 로그인 버튼, 에러 : Kakao.Auth 객체를 찾을 수 없습니다.",
+      );
     }
   };
 

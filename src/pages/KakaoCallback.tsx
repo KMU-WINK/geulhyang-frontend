@@ -17,15 +17,26 @@ function KakaoCallback() {
             { code },
           );
 
-          const accessToken = response.data.access_token;
-          localStorage.setItem("kakaoAccessToken", accessToken);
-          localStorage.setItem("kakaoAuthCode", code);
-          navigate("/success");
+          const { token } = response.data;
+          const { firstLogin } = response.data.message;
+          console.log("콜백 페이지, 토큰:", token); // token 출력
+          console.log("콜백 페이지, 유저 정보 :", firstLogin); // firstLogin 출력
+
+          localStorage.setItem("kakaoToken", token);
+
+          if (firstLogin) {
+            console.log("콜백 페이지 : 신규 유저");
+            navigate("/firstlogin");
+          } else {
+            console.log("콜백 페이지 : 기존 유저");
+            navigate("/success");
+          }
         } catch (error) {
+          console.error("콜백 페이지, 에러 : ", error);
           navigate("/login");
         }
       } else {
-        console.error("Authorization code not found.");
+        console.error("콜백 페이지, 에러 : 인가 코드 없음");
         navigate("/login");
       }
     };
@@ -33,7 +44,7 @@ function KakaoCallback() {
     handleAuth();
   }, [navigate]);
 
-  return <div>Loading...</div>;
+  return <div />;
 }
 
 export default KakaoCallback;

@@ -3,33 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 function SuccessPage() {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [authCode, setAuthCode] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedAccessToken = localStorage.getItem("kakaoAccessToken");
-    const storedAuthCode = localStorage.getItem("kakaoAuthCode");
+    const storedToken = localStorage.getItem("kakaoToken");
 
-    console.log("Stored authorization code:", storedAuthCode);
+    console.log("토큰 :", storedToken);
 
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
+    if (storedToken) {
+      setToken(storedToken);
     } else {
-      console.error("No access token available.");
-      navigate("/login");
-    }
-
-    if (storedAuthCode) {
-      setAuthCode(storedAuthCode);
-    } else {
-      console.error("No authorization code available.");
+      console.error("성공 페이지, 에러 : 토큰 없음.");
       navigate("/login");
     }
   }, [navigate]);
 
   const handleKakaoLogout = () => {
-    localStorage.removeItem("kakaoAccessToken");
-    localStorage.removeItem("kakaoAuthCode");
+    localStorage.removeItem("kakaoToken");
     navigate("/login");
     console.log("로그아웃 완료");
   };
@@ -37,9 +27,9 @@ function SuccessPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-2">카카오 로그인 성공</h1>
-      {accessToken && authCode ? (
+      {token ? (
         <div className="text-center mb-4">
-          <p className="mt-2">토큰 저장 완료 : {authCode}</p>
+          <p className="mt-2">저장된 토큰 : {token}</p>
         </div>
       ) : (
         <p>Loading...</p>
