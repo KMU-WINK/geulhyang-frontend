@@ -19,8 +19,8 @@ function KakaoCallback() {
 
           const { token } = response.data;
           const { firstLogin } = response.data.message;
-          console.log("콜백 페이지, 토큰:", token); // token 출력
-          console.log("콜백 페이지, 유저 정보 :", firstLogin); // firstLogin 출력
+          console.log("콜백 페이지, 토큰:", token);
+          console.log("콜백 페이지, 유저 정보 :", firstLogin);
 
           localStorage.setItem("kakaoToken", token);
 
