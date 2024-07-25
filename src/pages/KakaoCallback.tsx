@@ -16,7 +16,7 @@ function KakaoCallback() {
       if (code) {
         try {
           const response = await axios.post(
-            "http://localhost:4000/auth/kakao",
+            "http://localhost:8080/auth/kakao",
             { code },
           );
 
@@ -28,7 +28,8 @@ function KakaoCallback() {
 
           const firstLogin = message === "none";
 
-          setAuthState({ token, firstLogin });
+          // Recoil 상태 설정
+          setAuthState({ token, firstLogin, authCode: code });
           localStorage.setItem("kakaoToken", token);
 
           if (firstLogin) {

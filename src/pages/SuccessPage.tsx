@@ -9,14 +9,14 @@ function SuccessPage() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("kakaoToken") || auth.token;
+    const Token = localStorage.getItem("kakaoToken") || auth.token;
 
-    if (!storedToken) {
+    if (!Token) {
       console.error("성공 페이지, 에러 : 토큰 없음");
       navigate("/login");
     } else {
-      setToken(storedToken);
-      console.log("성공 페이지, 저장된 토큰 :", storedToken);
+      setToken(Token);
+      console.log("성공 페이지, 저장된 토큰 :", Token);
     }
   }, [auth.token, navigate]);
 

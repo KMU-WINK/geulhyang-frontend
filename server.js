@@ -75,6 +75,6 @@ app.post("/auth/kakao", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 4000, () => {
-  console.log(`Server running on http://localhost:${process.env.PORT || 4000}`);
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT || 8080}`);
 });

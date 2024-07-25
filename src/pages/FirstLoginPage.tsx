@@ -1,28 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { authState } from "../state/authState";
 
 function FirstLoginPage() {
   const [nickname, setNickname] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const navigate = useNavigate();
+  const auth = useRecoilValue(authState);
+
+  useEffect(() => {
+    if (!auth.authCode) {
+      console.error("첫 로그인 페이지, 에러: 인가 코드 없음");
+      navigate("/login");
+    }
+  }, [auth.authCode, navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const code = new URLSearchParams(window.location.search).get("code");
 
-    if (!code) {
+    if (!auth.authCode) {
       console.error("첫 로그인 페이지, 에러: 인가 코드 없음");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:4000/register", {
+      const response = await axios.post("http://localhost:8080/register", {
         nickname,
         gender,
         age,
-        code,
+        code: auth.authCode,
       });
 
       const { token } = response.data;
