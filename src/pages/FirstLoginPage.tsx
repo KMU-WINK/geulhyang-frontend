@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { authState } from "../state/authState";
 
 function FirstLoginPage() {
@@ -22,18 +22,17 @@ function FirstLoginPage() {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_PORT}/register`,
-        {
-          nickname,
-          gender,
-          age,
-          code: auth.token,
-        },
-      );
+      const response = await axios.post("http://localhost:8080/register", {
+        nickname,
+        gender,
+        age,
+        token: auth.token,
+      });
 
       const { token } = response.data;
       localStorage.setItem("우리 서버 Token", token);
+
+      useResetRecoilState(authState);
 
       navigate("/success");
     } catch (error) {

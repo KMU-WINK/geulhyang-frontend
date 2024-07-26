@@ -33,7 +33,7 @@ function KakaoLoginButton() {
       });
     } else {
       console.error(
-        "카카오 로그인 버튼, 에러 : Kakao.Auth 객체를 찾을 수 없습니다.",
+        "카카오 로그인 버튼, 에러 : Kakao Auth 객체를 찾을 수 없습니다.",
       );
     }
   };
