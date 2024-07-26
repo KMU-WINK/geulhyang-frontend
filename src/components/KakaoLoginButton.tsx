@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const KAKAO_JS_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
-const REDIRECT_URI = `${process.env.REACT_APP_REDIRECT_URI}/auth/kakao/callback`;
-
 function KakaoLoginButton() {
   const [isKakaoInitialized, setIsKakaoInitialized] = useState(false);
 
   useEffect(() => {
     if (window.Kakao) {
       if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(KAKAO_JS_KEY);
+        window.Kakao.init(process.env.REACT_APP_KAKAO_JS_KEY);
         setIsKakaoInitialized(true);
         console.log("카카오 로그인 버튼 : Kakao SDK 초기화 완료");
       } else {
@@ -32,7 +29,7 @@ function KakaoLoginButton() {
     }
     if (window.Kakao && window.Kakao.Auth) {
       window.Kakao.Auth.authorize({
-        redirectUri: REDIRECT_URI,
+        redirectUri: `${process.env.REACT_APP_REDIRECT_URI}/auth/kakao/callback`,
       });
     } else {
       console.error(

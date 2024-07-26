@@ -21,18 +21,16 @@ function FirstLoginPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!auth.token) {
-      console.error("첫 로그인 페이지, 에러: 토큰 없음");
-      return;
-    }
-
     try {
-      const response = await axios.post("http://localhost:8080/register", {
-        nickname,
-        gender,
-        age,
-        code: auth.token,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_PORT}/register`,
+        {
+          nickname,
+          gender,
+          age,
+          code: auth.token,
+        },
+      );
 
       const { token } = response.data;
       localStorage.setItem("우리 서버 Token", token);

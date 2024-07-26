@@ -16,7 +16,7 @@ function KakaoCallback() {
       if (code) {
         try {
           const response = await axios.post(
-            "http://localhost:8080/auth/kakao",
+            `${process.env.REACT_APP_PORT}/auth/kakao`,
             { code },
           );
 
