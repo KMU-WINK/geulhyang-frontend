@@ -26,16 +26,16 @@ function KakaoCallback() {
           console.log("콜백 페이지, 토큰:", token);
           console.log("콜백 페이지, 유저 정보 :", message);
 
-          const firstLogin = message === "none";
+          const firstLogin = message;
 
           // Recoil 상태 설정
-          setAuthState({ token, firstLogin, authCode: code });
+          setAuthState({ token, firstLogin });
           localStorage.setItem("kakaoToken", token);
 
-          if (firstLogin) {
+          if (firstLogin === "firstLogin") {
             console.log("콜백 페이지 : 신규 유저");
             navigate("/firstlogin");
-          } else {
+          } else if (firstLogin === "existLogin") {
             console.log("콜백 페이지 : 기존 유저");
             navigate("/success");
           }

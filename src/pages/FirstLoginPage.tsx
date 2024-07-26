@@ -12,17 +12,17 @@ function FirstLoginPage() {
   const auth = useRecoilValue(authState);
 
   useEffect(() => {
-    if (!auth.authCode) {
-      console.error("첫 로그인 페이지, 에러: 인가 코드 없음");
+    if (!auth.token) {
+      console.error("첫 로그인 페이지, 에러: 토큰 없음");
       navigate("/login");
     }
-  }, [auth.authCode, navigate]);
+  }, [auth.token, navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!auth.authCode) {
-      console.error("첫 로그인 페이지, 에러: 인가 코드 없음");
+    if (!auth.token) {
+      console.error("첫 로그인 페이지, 에러: 토큰 없음");
       return;
     }
 
@@ -31,11 +31,11 @@ function FirstLoginPage() {
         nickname,
         gender,
         age,
-        code: auth.authCode,
+        code: auth.token,
       });
 
       const { token } = response.data;
-      localStorage.setItem("kakaoToken", token);
+      localStorage.setItem("우리 서버 Token", token);
 
       navigate("/success");
     } catch (error) {
@@ -54,15 +54,30 @@ function FirstLoginPage() {
           onChange={(e) => setNickname(e.target.value)}
           className="mb-2 p-2 border border-gray-300 rounded"
         />
+        <div className="mb-2">
+          <label className="mr-4">
+            <input
+              type="checkbox"
+              value="Male"
+              checked={gender === "Male"}
+              onChange={() => setGender(gender === "Male" ? "" : "Male")}
+              className="mr-2"
+            />
+            남자
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Female"
+              checked={gender === "Female"}
+              onChange={() => setGender(gender === "Female" ? "" : "Female")}
+              className="mr-2"
+            />
+            여자
+          </label>
+        </div>
         <input
           type="text"
-          placeholder="성별"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="mb-2 p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="number"
           placeholder="나이"
           value={age}
           onChange={(e) => setAge(e.target.value)}

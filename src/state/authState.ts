@@ -6,6 +6,5 @@ export const authState = atom({
   default: {
     token: null,
     firstLogin: false,
-    authCode: null as string | null, // 타입을 string | null 로 설정
   },
 });
