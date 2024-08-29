@@ -22,7 +22,7 @@ function FirstLoginPage() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/register", {
+      const response = await axios.post("https://www.geulhyang.store/", {
         nickname,
         gender,
         age,

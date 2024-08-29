@@ -21,10 +21,10 @@ function MainPage() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const bestSellersResponse = await axios.get("엔드포인트");
+        const bestSellersResponse = await axios.get("url/recommend/popular");
         setBestSellers(bestSellersResponse.data);
 
-        const newReleasesResponse = await axios.get("엔드포인트");
+        const newReleasesResponse = await axios.get("url/recommend/popular");
         setNewReleases(newReleasesResponse.data);
       } catch (error) {
         console.error("에러:", error);
