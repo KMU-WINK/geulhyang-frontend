@@ -21,10 +21,14 @@ function MainPage() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const bestSellersResponse = await axios.get("url/recommend/popular");
+        const bestSellersResponse = await axios.get("url/recommend/popular", {
+          withCredentials: true,
+        });
         setBestSellers(bestSellersResponse.data);
 
-        const newReleasesResponse = await axios.get("url/recommend/popular");
+        const newReleasesResponse = await axios.get("url/recommend/popular", {
+          withCredentials: true,
+        });
         setNewReleases(newReleasesResponse.data);
       } catch (error) {
         console.error("에러:", error);

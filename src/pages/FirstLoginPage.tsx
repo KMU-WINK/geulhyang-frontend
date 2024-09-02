@@ -22,12 +22,18 @@ function FirstLoginPage() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("https://www.geulhyang.store/", {
-        nickname,
-        gender,
-        age,
-        token: auth.token,
-      });
+      const response = await axios.post(
+        "https://www.geulhyang.store/",
+        {
+          nickname,
+          gender,
+          age,
+          token: auth.token,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
       const { token } = response.data;
       localStorage.setItem("우리 서버 Token", token);

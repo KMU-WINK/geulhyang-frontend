@@ -18,6 +18,9 @@ function KakaoCallback() {
           const response = await axios.post(
             `${process.env.REACT_APP_PORT}/auth/kakao`,
             { code },
+            {
+              withCredentials: true,
+            },
           );
 
           const { token } = response.data;
